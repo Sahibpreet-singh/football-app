@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Match Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+
+  <div class="max-w-xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-green-400 mb-6 text-center">Match Details</h1>
+
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md border border-green-400">
+      <p class="mb-2"><strong>Created By:</strong> <%= match.clan?.name || match.teamname %></p>
+      <p class="mb-2"><strong>Location:</strong> <%= match.location %></p>
+      <p class="mb-2"><strong>Date:</strong> <%= new Date(match.date).toLocaleDateString() %></p>
+      <p class="mb-4"><strong>Time:</strong> <%= new Date(match.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></p>
+
+      <p class="mb-4">
+        <strong>Status:</strong>
+        <% if (match.joinedBy) { %>
+          ✅ Joined by <%= match.joinedBy %>
+        <% } else { %>
+          ⏳ Not Joined
+        <% } %>
+      </p>
+
+      <% if (!match.joinedBy && match.teamname !== user.teamname) { %>
+        <!-- Join Match button could go here if needed -->
+      <% } else if (match.teamname === user.teamname) { %>
+        <p class="text-blue-400 font-semibold">You created this match.</p>
+      <% } else if (match.joinedBy === user.teamname) { %>
+        <p class="text-green-400 font-semibold">You joined this match.</p>
+      <% } %>
+    </div>
+  </div>
+
+</body>
+</html>

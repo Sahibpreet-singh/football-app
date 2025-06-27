@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Clans - MatchFixer Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-gray-800 shadow-lg">
+        <h1 class="text-2xl font-bold text-white">MatchFixer Pro</h1>
+        <div class="flex items-center gap-4">
+            <% if (user) { %>
+                <h2>Hello, <%= user.displayName %></h2>
+                <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-semibold">
+                    Logout
+                </a>
+            <% } %>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="max-w-4xl mx-auto py-10">
+        <h1 class="text-3xl font-bold mb-6">Available Clans</h1>
+
+        <ul class="space-y-4">
+            <% clans.forEach(clan => { %>
+                <li class="p-6 bg-gray-800 rounded-lg shadow-lg">
+                    <a href="/clans/<%= clan._id %>" class="text-2xl font-semibold text-blue-600 hover:underline">
+                        <%= clan.name %>
+                    </a>
+                    <p class="text-gray-400">Admin: <%= clan.admin.displayName %></p>
+                    <p class="text-gray-400">Members:</p>
+                    <ul class="ml-4 list-disc">
+                        <% clan.members.forEach(member => { %>
+                            <li><%= member.displayName %></li>
+                        <% }) %>
+                    </ul>
+                </li>
+            <% }) %>
+        </ul>
+
+        <div class="mt-8">
+            <a href="/clans/create" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white">
+                ➕ Create Clan
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-6 bg-gray-800">
+        <p class="text-gray-400">&copy; 2025 MatchFixer Pro. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

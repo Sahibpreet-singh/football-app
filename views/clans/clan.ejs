@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= clan.name %> - MatchFixer Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-gray-800 shadow-lg">
+        <h1 class="text-2xl font-bold text-white">MatchFixer Pro</h1>
+        <div class="flex items-center gap-4">
+            <% if (user) { %>
+                <h2>Hello, <%= user.displayName %></h2>
+                <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-semibold">
+                    Logout
+                </a>
+            <% } %>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="max-w-4xl mx-auto py-10">
+        <h1 class="text-3xl font-bold mb-4"><%= clan.name %></h1>
+        <p class="text-gray-300 mb-6">Admin: <%= clan.admin.displayName %></p>
+
+        <h2 class="text-xl mb-2">Members:</h2>
+        <ul class="list-disc list-inside mb-6">
+            <% clan.members.forEach(member => { %>
+                <li class="text-lg"><%= member.displayName %></li>
+            <% }) %>
+        </ul>
+
+        <% 
+            const isMember = clan.members.some(m => m._id.toString() === user._id.toString());
+            const isAdmin = user._id.toString() === clan.admin._id.toString(); // Check if user is the admin
+            if (!isMember) { 
+        %>
+            <form action="/clans/<%= clan._id %>/join" method="POST">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg text-white font-semibold">
+                    Request to Join
+                </button>
+            </form>
+        <% } else { %>
+            <p class="text-green-400">You are a member of this clan.</p>
+        <% } %>
+
+        <% if (isMember) { %>
+        <form action="/clan/exit/<%= clan._id %>" method="POST" onsubmit="return confirm('Are you sure you want to leave this clan?');">
+            <button class="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Exit Clan</button>
+        </form>
+        <% } %>
+
+        <!-- Create Match Button (Only Visible to Admin) -->
+        <% if (isAdmin) { %>
+            <div class="mt-6">
+                <a href="/create" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg text-white font-semibold">
+                    Create a New Match
+                </a>
+            </div>
+        <% } else { %>
+            <p class="text-gray-400 mt-4">Only the admin of the clan can create a match.</p>
+        <% } %>
+
+        <!-- Back to Clan List Link -->
+        <div class="mt-6">
+            <a href="/clans" class="text-green-400 hover:underline">⬅ Back to Clan List</a>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="mt-10 bg-gray-800 p-4 rounded-lg">
+            <h3 class="text-xl mb-4">Chat</h3>
+            <div class="overflow-y-auto max-h-60 bg-gray-700 p-4 rounded-lg mb-4" id="chat-box">
+                <!-- Chat messages will be displayed here -->
+                <% clan.messages.forEach(message => { %>
+                    <p class="text-sm mb-2"><strong><%= message.sender %>:</strong> <%= message.content %></p>
+                <% }) %>
+            </div>
+
+            <form action="/clans/<%= clan._id %>/chat" method="POST">
+                <textarea name="message" rows="3" class="w-full p-2 mb-2 rounded-lg bg-gray-600 text-white" placeholder="Type a message..." required></textarea>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg text-white font-semibold">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-6 bg-gray-800">
+        <p class="text-gray-400">&copy; 2025 MatchFixer Pro. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

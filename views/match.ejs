@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Matches</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-gray-800 shadow-lg">
+        <h1 class="text-2xl font-bold text-green-400">Football Matches</h1>
+    </nav>
+
+    <!-- Matches Section -->
+    <section class="max-w-5xl mx-auto text-center py-12">
+        <h2 class="text-3xl font-bold text-green-300">Posted Matches</h2>
+
+        <% if (matches.length === 0) { %>
+            <p class="text-gray-400 mt-4">No matches found.</p>
+        <% } %>
+
+        <div id="match-list" class="grid md:grid-cols-3 gap-6 mt-8">
+            <% matches.forEach(match => { %>
+            <div class="bg-gray-800 p-6 rounded-lg shadow-md border border-green-400">
+                <h3 class="text-xl font-semibold text-white">
+                   
+                    <h3 class="text-xl font-semibold text-white">
+                        <%= match.clan ? match.clan.name : match.teamname %>
+                    </h3>
+                    
+                   
+                </h3>
+
+                <p class="text-gray-400 mt-2">
+                    📅 Date:
+                    <%= new Date(match.date).toLocaleDateString() %>
+                </p>
+                <p class="text-gray-400 mt-2">
+                    ⏰ Time:
+                    <%= new Date(match.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                </p>
+                <p class="text-gray-400 mt-2">📍 Location: <%= match.location %></p>
+
+                <% if (match.joinedBy) { %>
+                    <p class="text-green-400 mt-4">✅ Joined By: <%= match.joinedBy %></p>
+                <% } else if (match.teamname === user.teamname) { %>
+                    <p class="text-blue-400 mt-4">You created this match.</p>
+                <% } else { %>
+                    <p class="text-yellow-400 mt-4">⏳ Match Pending...</p>
+                    <form action="/join-match/<%= match._id %>" method="POST">
+                        <button class="mt-2 bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white font-bold">
+                            Join Match
+                        </button>
+                    </form>
+                <% } %>
+
+                <form action="/match-details/<%=match._id%>">
+                    <button class="mt-2 bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white font-bold">
+                        Show Details
+                    </button>
+                </form>
+            </div>
+            <% }); %>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-6 bg-gray-800 mt-10">
+        <p class="text-gray-400">&copy; 2025 Football Matches. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const currentUserTeam = "<%= user.teamname %>";
+    </script>
+    
+    
+
+</body>
+</html>

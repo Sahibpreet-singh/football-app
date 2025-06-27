@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a New Clan - MatchFixer Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-gray-800 shadow-lg">
+        <h1 class="text-2xl font-bold text-white">MatchFixer Pro</h1>
+        <div class="flex items-center gap-4">
+            <% if (user) { %>
+                <h2>Hello, <%= user.displayName %></h2>
+                <a href="/logout" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded text-white font-semibold">
+                    Logout
+                </a>
+            <% } %>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="max-w-4xl mx-auto py-10">
+        <h1 class="text-3xl font-bold mb-6">Create a New Clan</h1>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <form action="/clans" method="POST" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-lg font-medium">Clan Name</label>
+                    <input type="text" id="name" name="name" required class="w-full p-3 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                </div>
+                <div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg text-white font-semibold">
+                        Create Clan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center p-6 bg-gray-800">
+        <p class="text-gray-400">&copy; 2025 MatchFixer Pro. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

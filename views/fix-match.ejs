@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix a Match - MatchFixer Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-gray-800 shadow-lg">
+        <a href="/" class="text-2xl font-bold text-green-400">MatchFixer Pro</a>
+        <a href="/" class="bg-gray-700 hover:bg-gray-600 px-6 py-2 rounded text-white font-bold">Home</a>
+    </nav>
+
+    <!-- Match Fixing Form -->
+    <section class="max-w-xl mx-auto text-center py-16">
+        <h2 class="text-4xl font-extrabold text-green-300">Fix Your Match</h2>
+        <p class="mt-2 text-gray-400">Choose the teams and get your fixed result instantly.</p>
+
+        <form action="/match" method="POST" class="mt-8 bg-gray-800 p-6 rounded-lg shadow-md">
+
+            <div class="mb-4">
+                <label class="block text-left text-gray-400">Location</label>
+                <input type="text" name="place" required class="w-full p-2 rounded bg-gray-700 text-white">
+            </div>
+            <div class="mb-4">
+                <label class="block text-left text-gray-400">Date</label>
+                <input type="date" name="date" required class="w-full p-2 rounded bg-gray-700 text-white">
+            </div>
+           
+            <div class="mb-4">
+                <label class="block text-left text-gray-400">Time</label>
+                <input type="time" name="time" required class="w-full p-2 rounded bg-gray-700 text-white">
+            </div>
+
+            
+
+            <button type="submit" class="bg-green-500 hover:bg-green-600 px-6 py-2 rounded text-white font-bold">
+                Create Match
+            </button>
+        </form>
+    </section>
+
+    <!-- Display Fixed Result -->
+    
+
+    <!-- Footer -->
+    <footer class="text-center p-6 bg-gray-800 mt-10">
+        <p class="text-gray-400">&copy; 2025 MatchFixer Pro. All rights reserved.</p>
+    </footer>       
+
+</body>
+</html>
