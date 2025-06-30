@@ -23,7 +23,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ==== MongoDB Connection ====
 mongoose.connect(process.env.MONGO_URI, {
@@ -196,6 +196,8 @@ io.on("connection", (socket) => {
 
 
 // ==== Server Start ====
-server.listen(PORT, () => {
-  console.log(`🔥 Server with Socket.IO running on http://127.0.0.1:${PORT}`);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
+
