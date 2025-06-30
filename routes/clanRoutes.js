@@ -55,7 +55,7 @@ router.post("/:id/join", ensureAuth, async (req, res) => {
 
     res.redirect(`/clans/${clan._id}`);
   } catch (err) {
-    console.error("Error joining clan:", err);
+    console.error("alredy a member or reqested joining clan:", err);
     res.status(500).send("Error joining clan");
   }
 });
