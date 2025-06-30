@@ -51,10 +51,10 @@
                 <p class="text-gray-400 mt-2">📍 Location: <%= match.location %></p>
 
                 <% if (match.joinedBy) { %>
-                    <p class="text-green-400 mt-4">✅ Joined By: <%= match.joinedBy %></p>
+                    <p class="text-green-400 mt-4">✅ Joined By: <%= match.joinedBy.name %></p>
                 <% } else if (match.teamname === user.teamname) { %>
                     <p class="text-blue-400 mt-4">You created this match.</p>
-                <% } else { %>
+                <% } else if (!match.clan.name) { %>
                     <p class="text-yellow-400 mt-4">⏳ Match Pending...</p>
                     <form action="/join-match/<%= match._id %>" method="POST">
                         <button class="mt-2 bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded text-white font-bold">

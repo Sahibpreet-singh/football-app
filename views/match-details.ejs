@@ -19,20 +19,28 @@
       <p class="mb-4">
         <strong>Status:</strong>
         <% if (match.joinedBy) { %>
-          ✅ Joined by <%= match.joinedBy %>
+          ✅ Joined by <%= match.joinedBy.name %>
         <% } else { %>
           ⏳ Not Joined
         <% } %>
       </p>
 
-      <% if (!match.joinedBy && match.teamname !== user.teamname) { %>
-        <!-- Join Match button could go here if needed -->
+      <% if (!match.joinedBy && match.teamname !== user.teamname && user.clan) { %>
+        <!-- Join Match button -->
+        <form action="/matches/<%= match._id %>/join" method="POST">
+          <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500 transition">
+            Join Match
+          </button>
+        </form>
       <% } else if (match.teamname === user.teamname) { %>
         <p class="text-blue-400 font-semibold">You created this match.</p>
-      <% } else if (match.joinedBy === user.teamname) { %>
+      <% } else if (match.joinedBy && user.clan && match.joinedBy._id.toString() === user.clan._id.toString()) { %>
         <p class="text-green-400 font-semibold">You joined this match.</p>
       <% } %>
     </div>
+    <div class="text-left my-5">
+                <a href="/match" class="inline-block text-1xl bg-red-800 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition">Back</a>
+            </div>
   </div>
 
 </body>

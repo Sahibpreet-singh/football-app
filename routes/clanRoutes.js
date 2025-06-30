@@ -4,6 +4,9 @@ const Clan = require("../models/clan");
 const isMainAdmin = require("../middleware/isadmin");
 const ensureAuth = require("../middleware/auth");
 const mongoose=require("mongoose");
+const User = require("../models/User"); // adjust path if needed
+
+
 // GET /clans - List all clans
 router.get("/", ensureAuth, async (req, res) => {
   try {
@@ -60,6 +63,28 @@ router.post("/:id/join", ensureAuth, async (req, res) => {
   }
 });
 
+
+// Show the clan that the user has joined - GET /clans/my
+router.get("/my", ensureAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate("clan"); // assuming user.clan is stored
+    if (!user.clan) {
+      return res.render("clans/my-clans", { clan: null, user: req.user });
+    }
+
+    const clan = await Clan.findById(user.clan._id)
+      .populate("admin", "displayName")
+      .populate("members", "displayName");
+
+    res.render("clans/my-clan", { clan, user: req.user });
+  } catch (err) {
+    console.error("Error fetching user's clan:", err);
+    res.status(500).send("Something went wrong");
+  }
+});
+
+
+
 // Show individual clan page - GET /clans/:id
 router.get("/:id", ensureAuth, async (req, res) => {
   try {
@@ -74,6 +99,32 @@ router.get("/:id", ensureAuth, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Error loading clan");
+  }
+});
+
+router.post("/approve/:clanId/:userId", ensureAuth, async (req, res) => {
+  try {
+    const clan = await Clan.findById(req.params.clanId);
+    if (!clan.admin.equals(req.user._id)) {
+      return res.status(403).send("Forbidden");
+    }
+
+    const userId = req.params.userId;
+
+    // Add to members, remove from requests
+    clan.joinRequests.pull(userId);
+    clan.members.push(userId);
+    await clan.save();
+
+    // ✅ Also update user's clan reference
+    const user = await User.findById(userId);
+    user.clan = clan._id;
+    await user.save();
+
+    res.redirect(`/clans/${clan._id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
   }
 });
 
@@ -150,5 +201,9 @@ router.post("/exit/:clanId", ensureAuth, async (req, res) => {
     res.status(500).send("Something went wrong");
   }
 });
+
+
+
+
 
 module.exports = router;
