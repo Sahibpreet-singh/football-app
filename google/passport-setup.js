@@ -12,12 +12,12 @@ passport.deserializeUser(async (id, done) => {
 
 
   
-///////////////////////////////////////////////////
+
 const User = require('../models/User');
 
 passport.use(new GoogleStrategy({
-    clientID: "273668627967-4aiq6nghskkdhgcdaqs3m10tb4goe635.apps.googleusercontent.com",
-    clientSecret: "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", 
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET, 
     callbackURL: '/auth/google/callback',
   },
   async (accessToken, refreshToken, profile, done) => {

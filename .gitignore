@@ -1,0 +1,24 @@
+# Node modules (very large, auto-installed by npm)
+node_modules/
+
+# Environment variables (your secrets!)
+.env
+
+# Logs
+logs/
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Build files (if ever used)
+build/
+dist/
+
+# MongoDB dump
+dump/

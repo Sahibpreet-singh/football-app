@@ -26,7 +26,8 @@
     <!-- Main Content -->
     <section class="max-w-4xl mx-auto py-10">
         <h1 class="text-3xl font-bold mb-6">Available Clans</h1>
-
+        
+        
         <ul class="space-y-4">
             <% clans.forEach(clan => { %>
                 <li class="p-6 bg-gray-800 rounded-lg shadow-lg">
@@ -38,23 +39,26 @@
                     <ul class="ml-4 list-disc">
                         <% clan.members.forEach(member => { %>
                             <li><%= member.displayName %></li>
-                        <% }) %>
-                    </ul>
-                </li>
-            <% }) %>
-        </ul>
-
-        <div class="mt-8">
-            <a href="/clans/create" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white">
-                ➕ Create Clan
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="text-center p-6 bg-gray-800">
-        <p class="text-gray-400">&copy; 2025 MatchFixer Pro. All rights reserved.</p>
-    </footer>
+                            <% }) %>
+                        </ul>
+                    </li>
+                    <% }) %>
+                </ul>
+                
+                <div class="mt-8">
+                    <a href="/clans/create" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-white">
+                        ➕ Create Clan
+                    </a>
+                </div>
+                <div class="text-left my-5">
+                <a href="/" class="inline-block text-1xl bg-red-800 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition">Back</a>
+            </div>
+            </section>
+            
+            <!-- Footer -->
+            <footer class="text-center p-6 bg-gray-800">
+                <p class="text-gray-400">&copy; 2025 MatchFixer Pro. All rights reserved.</p>
+            </footer>
 
 </body>
 
